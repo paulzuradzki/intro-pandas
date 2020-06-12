@@ -40,13 +40,15 @@ def process_url_zip(url=None, zip_name=None, target_path=None):
     with zipfile.ZipFile(zip_name) as zip_obj:
         zip_obj.extractall(target_path)
         zip_contents = zip_obj.namelist()[0]
-
+        
     print(f'Contents {zip_contents} \nextracted at: {target_path}.\nRemoving {zip_name}.')
-    os.remove(zip_name)
 
     # if not CSV, re-name to CSV
     if not zip_contents.endswith('.csv'):
+        print('Renaming to csv')
         os.rename(os.path.join(target_path, zip_contents), os.path.join(target_path, f'{zip_contents}.csv'))
+        
+    os.remove(zip_name)
 
 if __name__ == '__main__':
     prep_example_data()
